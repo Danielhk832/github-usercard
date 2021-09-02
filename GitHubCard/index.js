@@ -16,6 +16,18 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+const cards = document.querySelector(".cards");
+
+axios
+  .get(`https://api.github.com/users/Danielhk832`)
+  .then((resp) => {
+    console.log(resp.data);
+    const cardStuff = cardMaker(resp.data);
+    cards.appendChild(cardStuff);
+  })
+  .catch((err) => {
+    console.log("8");
+  });
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -49,6 +61,108 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker({
+  avatar_url,
+  name,
+  login,
+  location,
+  html_url,
+  followers,
+  following,
+  bio,
+}) {
+  // const cardMain = document.createElement("div");
+  // const image = document.createElement("img");
+  // const info = document.createElement("div");
+  // const realName = document.createElement("h3");
+  // const userName = document.createElement("p");
+  // const userLocation = document.createElement("p");
+  // const profile = document.createElement("p");
+  // const userLink = document.createElement("a");
+  // const followerCount = document.createElement("p");
+  // const followingCount = document.createElement("p");
+  // const userBio = document.createElement("p");
+
+  // cardMain.classList.add("card");
+
+  // image.src = `${avatar_url}`;
+  // cardMain.appendChild(image);
+
+  // cardMain.appendChild(info);
+  // info.classList.add("card-info");
+
+  // info.appendChild(realName);
+  // realName.classList.add("name");
+  // realName.textContent = `${name}`;
+
+  // info.appendChild(userName);
+  // userName.classList.add("username");
+  // userName.textContent = `${login}`;
+
+  // info.appendChild(userLocation);
+  // userLocation.textContent = `Location: ${location}`;
+
+  // info.appendChild(profile);
+  // profile.textContent = `Profile:`;
+
+  // profile.appendChild(userLink);
+  // userLink.textContent = `${html_url}`;
+  // userLink.href = html_url;
+
+  // info.appendChild(followerCount);
+  // followerCount.textContent = `Followers: ${followers}`;
+  // info.appendChild(followingCount);
+  // followingCount.textContent = `Following: ${following}`;
+  // info.appendChild(userBio);
+  // userBio.textContent = `About: ${bio}`;
+  // return cardMain;
+
+  //HTML elemenent creation
+  const card = document.createElement("div");
+  const cardProfilePic = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const cardName = document.createElement("h3");
+  const cardUsername = document.createElement("p");
+  const cardLocation = document.createElement("p");
+  const profile = document.createElement("p");
+  const link = document.createElement("a");
+  const cardFollowers = document.createElement("p");
+  const cardFollowing = document.createElement("p");
+  const cardBio = document.createElement("p");
+
+  //assigning classes
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  cardName.classList.add("name");
+  cardUsername.classList.add("username");
+
+  //populating text/href/src content
+  cardProfilePic.setAttribute("src", `${avatar_url}`);
+  cardName.textContent = `${name}`;
+  cardUsername.textContent = `${login}`;
+  cardLocation.textContent = `${location}`;
+  profile.textContent = `Profile: `;
+  link.href = html_url;
+  link.textContent = `${html_url}`;
+  cardFollowers.textContent = `${followers}`;
+  cardFollowing.textContent = `${following}`;
+  cardBio.textContent = `${bio}`;
+
+  //nesting
+  card.appendChild(cardProfilePic);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUsername);
+  cardInfo.appendChild(cardLocation);
+  cardInfo.appendChild(profile);
+  profile.appendChild(link);
+  cardInfo.appendChild(cardFollowers);
+  cardInfo.appendChild(cardFollowing);
+  cardInfo.appendChild(cardBio);
+
+  return card;
+}
 
 /*
   List of LS Instructors Github username's:
