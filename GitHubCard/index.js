@@ -18,17 +18,27 @@
 */
 const cards = document.querySelector(".cards");
 
-axios
-  .get(`https://api.github.com/users/Danielhk832`)
-  .then((resp) => {
-    console.log(resp.data);
-    const cardStuff = cardMaker(resp.data);
-    cards.appendChild(cardStuff);
-  })
-  .catch((err) => {
-    console.log("8");
-  });
+const followersArray = [
+  "Danielhk832",
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+];
 
+followersArray.forEach((item) => {
+  axios
+    .get(`https://api.github.com/users/${item}`)
+    .then((resp) => {
+      console.log(resp.data);
+      const cardStuff = cardMaker(resp.data);
+      cards.appendChild(cardStuff);
+    })
+    .catch((err) => {
+      console.log("8");
+    });
+});
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -39,8 +49,6 @@ axios
     Using that array, iterate over it, requesting data for each user, creating a new card for each
     user, and adding that card to the DOM.
 */
-
-const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -72,52 +80,6 @@ function cardMaker({
   following,
   bio,
 }) {
-  // const cardMain = document.createElement("div");
-  // const image = document.createElement("img");
-  // const info = document.createElement("div");
-  // const realName = document.createElement("h3");
-  // const userName = document.createElement("p");
-  // const userLocation = document.createElement("p");
-  // const profile = document.createElement("p");
-  // const userLink = document.createElement("a");
-  // const followerCount = document.createElement("p");
-  // const followingCount = document.createElement("p");
-  // const userBio = document.createElement("p");
-
-  // cardMain.classList.add("card");
-
-  // image.src = `${avatar_url}`;
-  // cardMain.appendChild(image);
-
-  // cardMain.appendChild(info);
-  // info.classList.add("card-info");
-
-  // info.appendChild(realName);
-  // realName.classList.add("name");
-  // realName.textContent = `${name}`;
-
-  // info.appendChild(userName);
-  // userName.classList.add("username");
-  // userName.textContent = `${login}`;
-
-  // info.appendChild(userLocation);
-  // userLocation.textContent = `Location: ${location}`;
-
-  // info.appendChild(profile);
-  // profile.textContent = `Profile:`;
-
-  // profile.appendChild(userLink);
-  // userLink.textContent = `${html_url}`;
-  // userLink.href = html_url;
-
-  // info.appendChild(followerCount);
-  // followerCount.textContent = `Followers: ${followers}`;
-  // info.appendChild(followingCount);
-  // followingCount.textContent = `Following: ${following}`;
-  // info.appendChild(userBio);
-  // userBio.textContent = `About: ${bio}`;
-  // return cardMain;
-
   //HTML elemenent creation
   const card = document.createElement("div");
   const cardProfilePic = document.createElement("img");
